@@ -18,18 +18,18 @@ public interface CourseService {
 
 	public List<Course> findAllCourses() throws BusinessServiceException;
 	
-	public String deleteById(int id) throws BusinessServiceException;
+	public void deleteById(int id) throws BusinessServiceException;
 	
 	public void update(updateDTO updateDTOObj) throws BusinessServiceException;
 	public Course getCourseById(int id) throws BusinessServiceException;
-	public List<Level> viewLevels();
-	public List<Category> viewCategories();
-	public void switchStatus(int id);
-	public Level viewLevelById(int id);
-	public Category viewCategoryById(int id);
-	public List<Doc> viewDocByCourseId(int id);
+	public List<Level> viewLevels() throws BusinessServiceException;
+	public List<Category> viewCategories() throws BusinessServiceException;
+	public void switchStatus(int id) throws BusinessServiceException;
+	public Level viewLevelById(int id) throws BusinessServiceException;
+	public Category viewCategoryById(int id) throws BusinessServiceException;
+	public List<Doc> viewDocByCourseId(int id) throws BusinessServiceException;
 	public String login(String userId,String password);
-	public List<CourseSubscribedVideo> viewVideoByCourseId(int id);
-	public String deleteCourseVideoMappingById(int id);
+	public List<CourseSubscribedVideo> viewVideoByCourseId(int id) throws BusinessServiceException;
+	public void deleteCourseVideoMappingById(int id) throws BusinessServiceException;
 }
 	

@@ -54,9 +54,9 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 	@Override
-	public String deleteById(int id) throws BusinessServiceException {
+	public void deleteById(int id) throws BusinessServiceException {
 		try {
-			return courseRepository.deleteById(id);
+			 courseRepository.deleteById(id);
 		} catch (DatabaseServiceException e) {
 			throw new BusinessServiceException(e.getMessage());
 		}
@@ -66,8 +66,8 @@ public class CourseServiceImpl implements CourseService {
 	public void saveCourse(Course course) throws BusinessServiceException {
 		try {
 //			String name=course.getName();
-//			LocalDateTime time = LocalDateTime.now();
-//			course.setCreatedOn(time);
+			LocalDateTime time = LocalDateTime.now();
+			course.setCreatedOn(time);
 //			if(name==null)
 //			{
 //				 throw new BusinessServiceException("Fields missing");
@@ -76,6 +76,7 @@ public class CourseServiceImpl implements CourseService {
 //			
 //			 courseRepository.saveCourse(course);
 //			}	
+			course.setIsActive(true);
 			courseRepository.saveCourse(course);
 		} catch (DatabaseServiceException e) {
 			throw new BusinessServiceException(e.getMessage());
@@ -86,13 +87,11 @@ public class CourseServiceImpl implements CourseService {
 	@Override
 	public void update(updateDTO updateDTOObj) throws BusinessServiceException {
 		try {
+			LocalDateTime time = LocalDateTime.now();
 			Course course = new Course();
 			course.setId(updateDTOObj.getId());
 			course.setName(updateDTOObj.getName());
-			System.out.println("----level id==>" + updateDTOObj.getLevelId());
-
 			Level level = courseRepository.viewLevelById(updateDTOObj.getLevelId());
-			System.out.println("-----level obj==>" + level);
 			course.setLevelObj(level);
 			Category category = courseRepository.viewCategoryById(updateDTOObj.getCategoryId());
 			course.setCategoryObj(category);
@@ -111,48 +110,130 @@ public class CourseServiceImpl implements CourseService {
 			course.setCourse_icon(updateDTOObj.getCourse_icon());
 			course.setCreatedBy(updateDTOObj.getCreatedBy());
 			course.setModifiedBy(updateDTOObj.getModifiedBy());
-//			course.setCreatedOn(updateDTOObj.getCreatedOn());
-//			course.setModifiedOn(updateDTOObj.getModifiedOn());
+			course.setCreatedOn(updateDTOObj.getCreatedOn());
+			course.setModifiedOn(time);
 			course.setVersion(updateDTOObj.getVersion());
 			course.setMode(updateDTOObj.getMode());
 			course.setCompletionActivityPoints(updateDTOObj.getCompletionActivityPoints());
 			course.setEnrollmentActivityPoints(updateDTOObj.getEnrollmentActivityPoints());
+			if(course.getId()==null || course.getName()==null || course.getCompletionActivityPoints()==0||course.getEnrollmentActivityPoints()==0||course.getVersion()==0)
+			{
+			throw new BusinessServiceException("Required fields are missing");
+		}
+			else {
 			courseRepository.update(course);
+			}
 		} catch (DatabaseServiceException e) {
-			throw new BusinessServiceException("BusinessServiceException -- update");
+			throw new BusinessServiceException(e.getMessage());
 		}
 
 	}
 
 	@Override
-	public List<Level> viewLevels() {
-		return courseRepository.viewLevels();
+	public List<Level> viewLevels() throws BusinessServiceException{
+		List<Level> level;
+		try {
+		level= courseRepository.viewLevels();
+		if(level.isEmpty())
+			throw new BusinessServiceException("No records found");
+		else
+			return level;
+	}catch(DatabaseServiceException e) {
+	throw new BusinessServiceException(e.getMessage());	
 	}
+		}
 
 	@Override
-	public List<Category> viewCategories() {
-		return courseRepository.viewCategories();
+	public List<Category> viewCategories()throws BusinessServiceException {
+		List<Category> category;
+		try {
+		category= courseRepository.viewCategories();
+		if(category.isEmpty())
+			throw new BusinessServiceException("No records available");
+		else
+			return category;
+	}catch(DatabaseServiceException e) {
+		throw new BusinessServiceException(e.getMessage());	
 	}
+		}
 
 	@Override
-	public void switchStatus(int id) {
+	public void switchStatus(int id) throws BusinessServiceException {
+		try {
 		courseRepository.switchStatus(id);
+	}catch(DatabaseServiceException e) {
+		throw new BusinessServiceException(e.getMessage());
+	}
 	}
 
 	@Override
-	public Level viewLevelById(int id) {
-		return courseRepository.viewLevelById(id);
+	public Level viewLevelById(int id)throws BusinessServiceException {
+		Level level;
+		try {
+			level= courseRepository.viewLevelById(id);
+			if(level==null) {
+				throw new BusinessServiceException("No records found");
+			}
+			else
+				return level;
+	}catch(DatabaseServiceException e) {
+		throw new BusinessServiceException(e.getMessage());
+	}
+	}
+	@Override
+	public Category viewCategoryById(int id) throws BusinessServiceException {
+		Category category;
+		try {
+			category= courseRepository.viewCategoryById(id);
+			if(category==null) {
+				throw new BusinessServiceException("No records found");
+			}
+			else
+				return category;
+	}catch(DatabaseServiceException e) {
+		throw new BusinessServiceException(e.getMessage());
+	}
 	}
 
 	@Override
-	public Category viewCategoryById(int id) {
-		return courseRepository.viewCategoryById(id);
-	}
+	public List<Doc> viewDocByCourseId(int id) throws BusinessServiceException {
+		try {
+			List<Doc> doc;
+           if(courseRepository.findCourseById(id)!=null) {
+		       doc=courseRepository.viewDocByCourseId(id);
+            }
+           else {
+	           throw new BusinessServiceException("Given course id not found");
+              }
+           return doc;
+	     }catch(DatabaseServiceException e) {
+		     throw new BusinessServiceException(e.getMessage());
+	      }
+	    }
 
 	@Override
-	public List<Doc> viewDocByCourseId(int id) {
+	public List<CourseSubscribedVideo> viewVideoByCourseId(int id) throws BusinessServiceException{
+		List<CourseSubscribedVideo> course_video;
+		try {
+           if(courseRepository.findCourseById(id)!=null) {
+		       course_video=courseRepository.viewVideoByCourseId(id);
+            }
+           else {
+	           throw new BusinessServiceException("Given course id not found");
+              }
+           return course_video;
+	     }catch(DatabaseServiceException e) {
+		     throw new BusinessServiceException(e.getMessage());
+	      }
+	    }
 
-		return courseRepository.viewDocByCourseId(id);
+	@Override
+	public void deleteCourseVideoMappingById(int id) throws BusinessServiceException {
+		try {
+		 courseRepository.deleteCourseVideoMappingById(id);
+	}catch(DatabaseServiceException e) {
+		throw new BusinessServiceException(e.getMessage());
+	  }
 	}
 
 	@Override
@@ -162,15 +243,5 @@ public class CourseServiceImpl implements CourseService {
 		login.setPassword(password);
 		return courseRepository.login(login);
 	}
-
-	@Override
-	public List<CourseSubscribedVideo> viewVideoByCourseId(int id) {
-		
-		return courseRepository.viewVideoByCourseId(id);
-	}
-
-	@Override
-	public String deleteCourseVideoMappingById(int id) {
-		return courseRepository.deleteCourseVideoMappingById(id);
-	}
 }
+

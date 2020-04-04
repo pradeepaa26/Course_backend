@@ -32,18 +32,18 @@ public class Course implements Serializable {
 	private Integer id;
 	// @Min(value = 20, message = "Course name shold not be more than 20
 	// characters")
-	@NotNull // @column(name="",nullable=false)
+//	@NotNull // @column(name="",nullable=false)
 	@Size(min = 2, max = 200)
 	@Column(name = "name")
 
 	private String name;
 
-	@NotNull
+//	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "level_id")
 	private Level levelObj;
 
-	@NotNull
+//	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id")
 	private Category categoryObj;
@@ -54,9 +54,9 @@ public class Course implements Serializable {
 	@OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<CourseSubscribedVideo> courseSubscribedVideo;
 
-	@NotNull
+	//@NotNull
 	private String tag;
-	@NotNull
+	//@NotNull
 	private String slug;
 //	@NotNull
 	@Column(name = "is_active")
@@ -250,8 +250,8 @@ public class Course implements Serializable {
 		return createdOn;
 	}
 
-	public void setCreatedOn(LocalDateTime createdOn) {
-		this.createdOn = createdOn;
+	public void setCreatedOn(LocalDateTime localDate) {
+		this.createdOn = localDate;
 	}
 
 	public LocalDateTime getModifiedOn() {

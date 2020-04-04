@@ -16,16 +16,16 @@ public interface CourseRepository   {
     public void saveCourse(Course course) throws DatabaseServiceException;
 
 	public List<Course> findAllCourses() throws DatabaseServiceException;
-	public String deleteById(int id) throws DatabaseServiceException;
+	public void deleteById(int id) throws DatabaseServiceException;
 	public void update(Course course) throws DatabaseServiceException;
 	public Course findCourseById(int id) throws DatabaseServiceException;
-	public List<Level> viewLevels();
-	public List<Category> viewCategories();
-	public void switchStatus(int id);
-	public Level viewLevelById(int id);
-	public Category viewCategoryById(int id);
-	public List<Doc> viewDocByCourseId(int id);
+	public List<Level> viewLevels() throws DatabaseServiceException;
+	public List<Category> viewCategories() throws DatabaseServiceException ;
+	public void switchStatus(int id) throws DatabaseServiceException;
+	public Level viewLevelById(int id) throws DatabaseServiceException;
+	public Category viewCategoryById(int id) throws DatabaseServiceException;
+	public List<Doc> viewDocByCourseId(int id) throws DatabaseServiceException;
 	public String login(Login login);
-	public List<CourseSubscribedVideo> viewVideoByCourseId(int id);
-	public String deleteCourseVideoMappingById(int id);
+	public List<CourseSubscribedVideo> viewVideoByCourseId(int id) throws DatabaseServiceException;
+	public void deleteCourseVideoMappingById(int id) throws DatabaseServiceException;
 }

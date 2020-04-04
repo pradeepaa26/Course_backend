@@ -34,7 +34,7 @@ public class CourseRepositoryImpl implements CourseRepository {
 					Course.class).getResultList();
 			return courses;
 		} catch (Exception e) {
-			throw new DatabaseServiceException("error in fetching from db");
+			throw new DatabaseServiceException("Error in fetching data from db");
 		}
 
 	}
@@ -50,7 +50,7 @@ public class CourseRepositoryImpl implements CourseRepository {
 		return courses.get(0);
 		}catch(Exception e)
 		{
-			throw new DatabaseServiceException("error in finding id from db");
+			throw new DatabaseServiceException("Erro Id not found in db");
 		}
 	}
 
@@ -74,7 +74,7 @@ public class CourseRepositoryImpl implements CourseRepository {
 	}
 
 	@Override
-	public String deleteById(int id) throws DatabaseServiceException {
+	public void deleteById(int id) throws DatabaseServiceException {
 
 		Session session = this.sessionFactory.getCurrentSession();
 		try {
@@ -85,13 +85,9 @@ public class CourseRepositoryImpl implements CourseRepository {
 				session.delete(obj);
 				session.getTransaction().commit();
 				session.close();
-				return "deletion successful";
-			} else
-				return "deletion failed as the requested object doesnt exists";
-		} catch (HibernateException e) {
-			throw new DatabaseServiceException("Database service exception -- exeption in deleteByID");
-		} finally {
-			session.close();
+			}
+		} catch (Exception e) {
+			throw new DatabaseServiceException("Error in deleting from db");
 		}
 	}
 
@@ -100,42 +96,50 @@ public class CourseRepositoryImpl implements CourseRepository {
 
 		Session session = this.sessionFactory.getCurrentSession();
 		try {
+			if (course.getDocObj() != null)
 			course.getDocObj().forEach(docObj -> docObj.setCourse(course));
 			if (course.getCourseSubscribedVideo() != null)
 				course.getCourseSubscribedVideo()
 						.forEach(courseSubscribedVideoObj -> courseSubscribedVideoObj.setCourse(course));
 
 			session.beginTransaction();
-			// Course updatedCourse = (Course) session.merge(course);
 			session.saveOrUpdate(course);
 			session.getTransaction().commit();
-		} catch (HibernateException e) {
-			throw new DatabaseServiceException("Database service exception -- exeption in deleteByID");
-		} finally {
 			session.close();
+		} catch (HibernateException e) {
+			throw new DatabaseServiceException("Error in Updating to db");
+		}
+	}
+
+	@Override
+	public List<Level> viewLevels() throws DatabaseServiceException{
+		try {
+		Session session = this.sessionFactory.getCurrentSession();
+		return session.createQuery("From Level", Level.class).getResultList();
+		}catch(Exception e) {
+			throw new DatabaseServiceException("Error in finding data from db");
 		}
 
 	}
 
 	@Override
-	public List<Level> viewLevels() {
-		Session session = this.sessionFactory.getCurrentSession();
-		return session.createQuery("From Level", Level.class).getResultList();
-
-	}
-
-	@Override
-	public List<Category> viewCategories() {
+	public List<Category> viewCategories()throws DatabaseServiceException {
+		try {
 		Session session = this.sessionFactory.getCurrentSession();
 		return session.createQuery("From Category", Category.class).getResultList();
+	}catch(Exception e)
+		{
+		throw new DatabaseServiceException("Error in finding data from db");
+		}
 	}
-
 	@Override
-	public void switchStatus(int id) {
+	public void switchStatus(int id) throws DatabaseServiceException {
+		try {
 		Session session = this.sessionFactory.getCurrentSession();
 		session.beginTransaction();
+		Course obj=findCourseById(id);
+		if(obj!=null) {
 		Course course = session.get(Course.class, id);
-
 		if (course.getIsActive())
 			course.setIsActive(false);
 		else
@@ -143,49 +147,62 @@ public class CourseRepositoryImpl implements CourseRepository {
 		session.saveOrUpdate(course);
 		session.getTransaction().commit();
 		session.close();
+		}
+	}catch(Exception e) {
+		throw new DatabaseServiceException("Error status not found in db");
+	}
 	}
 
 	@Override
-	public Level viewLevelById(int id) {
+	public Level viewLevelById(int id) throws DatabaseServiceException {
+		try {
 		Session session = this.sessionFactory.getCurrentSession();
-		session.beginTransaction();
 		Level level = session.get(Level.class, id);
-		session.getTransaction().commit();
-		// session.close();
-
 		return level;
+		}catch(Exception e)
+		{
+			throw new DatabaseServiceException("Error categoory id not found in db");
+		}
 	}
 
 	@Override
-	public Category viewCategoryById(int id) {
-		Session session = this.sessionFactory.getCurrentSession();
-		session.beginTransaction();
-		Category category = session.get(Category.class, id);
-		session.getTransaction().commit();
-		// session.close();
-		return category;
+	public Category viewCategoryById(int id) throws  DatabaseServiceException {
+		try {
+			Session session = this.sessionFactory.getCurrentSession();
+			Category category = session.get(Category.class, id);
+			return category;
+			}catch(Exception e)
+			{
+				throw new DatabaseServiceException("Error categoory id not found in db");
+			}
 	}
-
+	
 	@Override
-	public List<Doc> viewDocByCourseId(int id) {
+	public List<Doc> viewDocByCourseId(int id) throws DatabaseServiceException  {
+		try {
 		Session session = this.sessionFactory.getCurrentSession();
-		session.beginTransaction();
 		List<Doc> listOfDocs = session.createQuery("SELECT doc FROM Doc doc where doc.course.id=" + id, Doc.class)
 				.getResultList();
 		return listOfDocs;
+	}catch(Exception e) {
+		throw new DatabaseServiceException("Error in finding mapped documents");	
+	}
 	}
 	@Override
-	public List<CourseSubscribedVideo> viewVideoByCourseId(int id) {
+	public List<CourseSubscribedVideo> viewVideoByCourseId(int id) throws DatabaseServiceException  {
+		try {
 		Session session = this.sessionFactory.getCurrentSession();
-		session.beginTransaction();
 		List<CourseSubscribedVideo> listOfCourseSubscribedVideos = session.createQuery("SELECT csv FROM CourseSubscribedVideo csv where csv.course.id=" + id, CourseSubscribedVideo.class)
 				.getResultList();
 		return listOfCourseSubscribedVideos;
+	}catch(Exception e) {
+		throw new DatabaseServiceException("Error in finding the mapped videos");
 	}
-
+	}
 	
 	@Override
-	public String deleteCourseVideoMappingById(int id)  {
+	public void deleteCourseVideoMappingById(int id) throws DatabaseServiceException {
+		try {
 		Session session = this.sessionFactory.getCurrentSession();
 		session.beginTransaction();
 			CourseSubscribedVideo courseSubscribedVideo = session.get(CourseSubscribedVideo.class, id);
@@ -193,24 +210,22 @@ public class CourseRepositoryImpl implements CourseRepository {
 				session.delete(courseSubscribedVideo);
 				session.getTransaction().commit();
 				session.close();
-				return "deletion successful";
-			} else
-				return "deletion failed as the requested object doesnt exists";
-		}
-
+			}
+			else {
+				throw new DatabaseServiceException("Maping id not found");
+			}
+		}catch(Exception e) {
+	      throw new DatabaseServiceException(e.getMessage());	
+	}
+}
 	@Override
 	public String login(Login login) {
 		Session session = this.sessionFactory.getCurrentSession();
 		session.beginTransaction();
-		// Query query=session.createQuery("SELECT login FROM Login login where
-		// login.userId=:userId");
-
-		// List<Login> l=
 		String password = session
 				.createQuery("SELECT login.password FROM Login login where login.userId=" + login.getUserId(),
 						Login.class)
 				.toString();
-		// String password=l.get(0).getPassword();
 		if (password.equals(login.getPassword()))
 			return "login successful";
 		else

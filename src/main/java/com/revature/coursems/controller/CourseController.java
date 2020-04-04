@@ -65,7 +65,7 @@ public class CourseController {
 	
 	//@ExceptionHandler(BusinessServiceException.class)
 	@DeleteMapping("/{id}")
-	public ResponseEntity<HTTPStatusResponse> deleteById(@PathVariable int id) throws BusinessServiceException {
+	public ResponseEntity<HTTPStatusResponse> deleteById(@PathVariable int id){
 		try {
 		courseService.deleteById(id);
 		return new ResponseEntity<>(new HTTPStatusResponse(HttpStatus.OK.value(),"deleted given id"), HttpStatus.OK);
@@ -84,67 +84,102 @@ public class CourseController {
 	}catch(BusinessServiceException e)
 	{
 		return new ResponseEntity<>(
-				new HTTPStatusResponse(HttpStatus.BAD_REQUEST.value(),e.getMessage(),null),HttpStatus.BAD_REQUEST);
+				new HTTPStatusResponse(HttpStatus.BAD_REQUEST.value(),e.getMessage()),HttpStatus.BAD_REQUEST);
 	}
 	}
-	//@ExceptionHandler(BusinessServiceException.class)
-	@PutMapping("")
-	public ResponseEntity<?> update(@RequestBody updateDTO updateDTOObj) throws BusinessServiceException {
-		// System.out.println(course.getId());
+	
+	@PutMapping()
+	public ResponseEntity<HTTPStatusResponse> update(@RequestBody updateDTO updateDTOObj){
+		try {
 		courseService.update(updateDTOObj);
-		return new ResponseEntity<>("updation successful", HttpStatus.OK);
+		return new ResponseEntity<>(new HTTPStatusResponse(HttpStatus.OK.value(),"data updated successfully"), HttpStatus.OK);
+		}catch(BusinessServiceException e) {
+			return new ResponseEntity<>(
+					new HTTPStatusResponse(HttpStatus.BAD_REQUEST.value(),e.getMessage()),HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 	@GetMapping("/viewLevels")
-	public ResponseEntity<?> viewLevels(){
+	public ResponseEntity<HTTPStatusResponse> viewLevels(){
+		try {
 		List<Level> listOfLevels=courseService.viewLevels();
-		return new ResponseEntity<>(listOfLevels, HttpStatus.OK);
+		return new ResponseEntity<>(new HTTPStatusResponse(HttpStatus.OK.value(),"data retrived successfully",listOfLevels), HttpStatus.OK);
+	}catch(BusinessServiceException e)
+		{
+		return new ResponseEntity<>(new HTTPStatusResponse(HttpStatus.NOT_FOUND.value(),"data not found"), HttpStatus.NOT_FOUND);
+		}
 	}
-	
 	@GetMapping("/viewCategories")
-	public ResponseEntity<?> viewCategories(){
+	public ResponseEntity<HTTPStatusResponse> viewCategories(){
+		try {
 		List<Category> listOfCategories=courseService.viewCategories();
-		return new ResponseEntity<>(listOfCategories, HttpStatus.OK);
+		return new ResponseEntity<>(new HTTPStatusResponse(HttpStatus.OK.value(),"data retrived successfully",listOfCategories), HttpStatus.OK);
+	}catch(BusinessServiceException e) {
+		return new ResponseEntity<>(new HTTPStatusResponse(HttpStatus.NOT_FOUND.value(),"data not found"), HttpStatus.NOT_FOUND);
 	}
+		}
 	
+	@GetMapping("/switchStatus/{id}")
+	public ResponseEntity<HTTPStatusResponse> switchStatus(@PathVariable int id)  {
+		try {
+		courseService.switchStatus(id);
+		return new ResponseEntity<>(new HTTPStatusResponse(HttpStatus.OK.value(),"Status switched successfully"), HttpStatus.OK);
+	}catch(BusinessServiceException e) {
+		return new ResponseEntity<>(new HTTPStatusResponse(HttpStatus.NOT_FOUND.value(),e.getMessage()), HttpStatus.NOT_FOUND);
+	}
+	}
 	@GetMapping("/viewLevelById/{id}")
-	public ResponseEntity<?> viewLevelById(@PathVariable int id){
+	public ResponseEntity<HTTPStatusResponse> viewLevelById(@PathVariable int id){
+		try {
 		Level level=courseService.viewLevelById(id);
-		return new ResponseEntity<>(level, HttpStatus.OK);
+		return new ResponseEntity<>(new HTTPStatusResponse(HttpStatus.OK.value(),"data for the id found",level), HttpStatus.OK);
+	}catch(BusinessServiceException e) {
+		return new ResponseEntity<>(new HTTPStatusResponse(HttpStatus.NOT_FOUND.value(),e.getMessage()), HttpStatus.NOT_FOUND);
+	}
 	}
 	
 	@GetMapping("/viewCategoryById/{id}")
-	public ResponseEntity<?> viewCategoryById(@PathVariable int id){
-		Category category=courseService.viewCategoryById(id);
-		return new ResponseEntity<>(category, HttpStatus.OK);
-	}
+	public ResponseEntity<HTTPStatusResponse> viewCategoryById(@PathVariable int id){
+				try {
+					Category category=courseService.viewCategoryById(id);
+			return new ResponseEntity<>(new HTTPStatusResponse(HttpStatus.OK.value(),"data for the id found",category), HttpStatus.OK);
+		}catch(BusinessServiceException e) {
+			return new ResponseEntity<>(new HTTPStatusResponse(HttpStatus.NOT_FOUND.value(),e.getMessage()), HttpStatus.NOT_FOUND);
+		}
+		}
 	
-	@GetMapping("/switchStatus/{id}")
-	public ResponseEntity<?> switchStatus(@PathVariable int id)  {
-		
-		courseService.switchStatus(id);
-		return new ResponseEntity<>("", HttpStatus.OK);
-	}
 	@GetMapping("/viewDocByCourseId/{id}")
-	public  ResponseEntity<?> viewDocByCourseId(@PathVariable int id){
+	public  ResponseEntity<HTTPStatusResponse> viewDocByCourseId(@PathVariable int id){
+		try {
 		List<Doc> listOfDocs=courseService.viewDocByCourseId(id);
-		return new ResponseEntity<>(listOfDocs, HttpStatus.OK);
+		return new ResponseEntity<>(new HTTPStatusResponse(HttpStatus.OK.value()," mapped docs for the id found",listOfDocs), HttpStatus.OK);
+	}catch(BusinessServiceException e)
+		{
+		return new ResponseEntity<>(new HTTPStatusResponse(HttpStatus.NOT_FOUND.value(),e.getMessage()), HttpStatus.NOT_FOUND);
+		}
 	}
 	@GetMapping("/viewVideoByCourseId/{id}")
-	public  ResponseEntity<?> viewVideoByCourseId(@PathVariable int id){
+	public  ResponseEntity<HTTPStatusResponse> viewVideoByCourseId(@PathVariable int id){
+		try {
 		List<CourseSubscribedVideo> listOfCourseSubscribedVideos=courseService.viewVideoByCourseId(id);
-		return new ResponseEntity<>(listOfCourseSubscribedVideos, HttpStatus.OK);
+		return new ResponseEntity<>(new HTTPStatusResponse(HttpStatus.OK.value()," mapped videos for the id found",listOfCourseSubscribedVideos), HttpStatus.OK);
+	}catch(BusinessServiceException e) {
+		return new ResponseEntity<>(new HTTPStatusResponse(HttpStatus.NOT_FOUND.value(),e.getMessage()), HttpStatus.NOT_FOUND);
 	}
+	}
+	@DeleteMapping("deleteCourseVideoMappingById/{id}")
+	public ResponseEntity<HTTPStatusResponse> deleteCourseVideoMappingById(@PathVariable int id){
+		try { 
+			courseService.deleteCourseVideoMappingById(id);
+		return new ResponseEntity<>(new HTTPStatusResponse(HttpStatus.OK.value()," mapped videos for the id are deleted",null), HttpStatus.OK);
+	}catch(BusinessServiceException e) {
+		return new ResponseEntity<>(new HTTPStatusResponse(HttpStatus.NOT_FOUND.value(),e.getMessage()), HttpStatus.NOT_FOUND);
+	}
+}
 	@GetMapping("/login/{userId}/{password}")
 	public  ResponseEntity<?> login(@PathVariable String userId,@PathVariable String password){
 		String loginStatus=courseService.login(userId,password);
 		return new ResponseEntity<>(loginStatus, HttpStatus.OK);
-	}
-
-	@DeleteMapping("deleteCourseVideoMappingById/{id}")
-	public ResponseEntity<?> deleteCourseVideoMappingById(@PathVariable int id) throws BusinessServiceException {
-		 courseService.deleteCourseVideoMappingById(id);
-		return new ResponseEntity<>("", HttpStatus.OK);
 	}
 	
 
