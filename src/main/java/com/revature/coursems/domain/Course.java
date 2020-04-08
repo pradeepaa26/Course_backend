@@ -1,7 +1,6 @@
 package com.revature.coursems.domain;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -30,20 +29,18 @@ public class Course implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	// @Min(value = 20, message = "Course name shold not be more than 20
-	// characters")
-//	@NotNull // @column(name="",nullable=false)
+	@NotNull
 	@Size(min = 2, max = 200)
 	@Column(name = "name")
 
 	private String name;
 
-//	@NotNull
+	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "level_id")
 	private Level levelObj;
 
-//	@NotNull
+	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id")
 	private Category categoryObj;
@@ -54,11 +51,11 @@ public class Course implements Serializable {
 	@OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<CourseSubscribedVideo> courseSubscribedVideo;
 
-	//@NotNull
+	@NotNull
 	private String tag;
-	//@NotNull
+	@NotNull
 	private String slug;
-//	@NotNull
+	@NotNull
 	@Column(name = "is_active")
 	private Boolean isActive;
 	@Column(name = "is_level_override")
@@ -86,13 +83,13 @@ public class Course implements Serializable {
 	private LocalDateTime createdOn;
 	@Column(name = "modified_on")
 	private LocalDateTime modifiedOn;
-	private int version;
+	private Integer version;
 	@Column(name="mode")
 	private String mode;
 	@Column(name = "completion_activity_points")
-	private int completionActivityPoints;
+	private Integer completionActivityPoints;
 	@Column(name = "enrollment_activity_points")
-	private int enrollmentActivityPoints;
+	private Integer enrollmentActivityPoints;
 	public Integer getId() {
 		return id;
 	}
@@ -117,30 +114,28 @@ public class Course implements Serializable {
 		this.isActive = isActive;
 	}
 
-	
-	public int getCompletionActivityPoints() {
-		return completionActivityPoints;
-	}
-
-	public void setCompletionActivityPoints(int completionActivityPoints) {
-		this.completionActivityPoints = completionActivityPoints;
-	}
-
-	public int getEnrollmentActivityPoints() {
-		return enrollmentActivityPoints;
-	}
-
-	public void setEnrollmentActivityPoints(int enrollmentActivityPoints) {
-		this.enrollmentActivityPoints = enrollmentActivityPoints;
-	}
-	
-	
-	public int getVersion() {
+	public Integer getVersion() {
 		return version;
 	}
 
-	public void setVersion(int version) {
+	public void setVersion(Integer version) {
 		this.version = version;
+	}
+
+	public Integer getCompletionActivityPoints() {
+		return completionActivityPoints;
+	}
+
+	public void setCompletionActivityPoints(Integer completionActivityPoints) {
+		this.completionActivityPoints = completionActivityPoints;
+	}
+
+	public Integer getEnrollmentActivityPoints() {
+		return enrollmentActivityPoints;
+	}
+
+	public void setEnrollmentActivityPoints(Integer enrollmentActivityPoints) {
+		this.enrollmentActivityPoints = enrollmentActivityPoints;
 	}
 
 	public List<Doc> getDocObj() {
@@ -301,20 +296,6 @@ public class Course implements Serializable {
 	public void setIsDashboard(Boolean isDashboard) {
 		this.isDashboard = isDashboard;
 	}
-
-//	@Override
-//	public String toString() {
-//		return "Course [categoryObj=" + categoryObj + ", completionActivityPoints=" + completionActivityPoints
-//				+ ", courseSubscribedVideo=" + courseSubscribedVideo + ", course_icon=" + course_icon + ", createdBy="
-//				+ createdBy + ", createdOn=" + createdOn + ", description=" + description + ", docObj=" + docObj
-//				+ ", enrollmentActivityPoints=" + enrollmentActivityPoints + ", id=" + id + ", isActive=" + isActive
-//				+ ", isDashboard=" + isDashboard + ", isLevelOverride=" + isLevelOverride + ", isPreSignUp="
-//				+ isPreSignUp + ", isSlugLogin=" + isSlugLogin + ", levelObj=" + levelObj + ", metaDesc=" + metaDesc
-//				+ ", metaKey=" + metaKey + ", modifiedBy=" + modifiedBy + ", modifiedOn=" + modifiedOn + ", name="
-//				+ name + ", slug=" + slug + ", tag=" + tag + ", version=" + version + "]";
-//	}
-
-	
 	
 }
 

@@ -40,17 +40,6 @@ public class CourseSubscribedVideo implements Serializable{
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	// public Video getVideo() {
-	// 	return video;
-	// }
-
-	// public void setVideo(Video video) {
-	// 	this.video = video;
-	// }
-	
-	
-
 	public Course getCourse() {
 		return course;
 	}

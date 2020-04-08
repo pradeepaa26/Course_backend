@@ -1,7 +1,7 @@
 package com.revature.coursems.domain;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,9 +36,9 @@ public class Doc implements Serializable{
     @Column(name = "modified_by")
     private String modifiedBy;
     @Column(name = "created_on")
-    private LocalDate cratedOn;
+    private LocalDateTime createdOn;
     @Column(name = "modified_on")
-    private LocalDate modifiedOn;
+    private LocalDateTime modifiedOn;
 
     public Integer getId() {
         return id;
@@ -82,19 +82,19 @@ public class Doc implements Serializable{
         this.modifiedBy = modifiedBy;
     }
 
-    public LocalDate getCratedOn() {
-        return cratedOn;
+    public LocalDateTime getCreatedOn() {
+        return createdOn;
     }
 
-    public void setCratedOn(LocalDate cratedOn) {
-        this.cratedOn = cratedOn;
+    public void setCreatedOn(LocalDateTime time) {
+        this.createdOn = time;
     }
 
-    public LocalDate getModifiedOn() {
+    public LocalDateTime getModifiedOn() {
         return modifiedOn;
     }
 
-    public void setModifiedOn(LocalDate modifiedOn) {
+    public void setModifiedOn(LocalDateTime modifiedOn) {
         this.modifiedOn = modifiedOn;
     }
 

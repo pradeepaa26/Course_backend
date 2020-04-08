@@ -8,7 +8,6 @@ import com.revature.coursems.domain.CourseSubscribedVideo;
 import com.revature.coursems.domain.Doc;
 import com.revature.coursems.domain.Level;
 import com.revature.coursems.domain.Login;
-import com.revature.coursems.domain.Video;
 
 import exception.DatabaseServiceException;
 

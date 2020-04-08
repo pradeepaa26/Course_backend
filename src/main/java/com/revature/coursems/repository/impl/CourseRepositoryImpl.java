@@ -8,15 +8,13 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.mysql.cj.Query;
 import com.revature.coursems.domain.Category;
 import com.revature.coursems.domain.Course;
 import com.revature.coursems.domain.CourseSubscribedVideo;
 import com.revature.coursems.domain.Doc;
-import com.revature.coursems.repository.CourseRepository;
 import com.revature.coursems.domain.Level;
 import com.revature.coursems.domain.Login;
-import com.revature.coursems.domain.Video;
+import com.revature.coursems.repository.CourseRepository;
 
 import exception.DatabaseServiceException;
 
@@ -64,7 +62,7 @@ public class CourseRepositoryImpl implements CourseRepository {
 			if (course.getCourseSubscribedVideo() != null)
 				course.getCourseSubscribedVideo()
 						.forEach(courseSubscribedVideoObj -> courseSubscribedVideoObj.setCourse(course));
-			session.save(course);//here changes become permanent
+			session.save(course); //here changes become permanent
 			session.getTransaction().commit();
             session.close();
 		}

@@ -9,13 +9,12 @@ import org.springframework.stereotype.Service;
 import com.revature.coursems.domain.Category;
 import com.revature.coursems.domain.Course;
 import com.revature.coursems.domain.CourseSubscribedVideo;
+import com.revature.coursems.domain.Doc;
 import com.revature.coursems.domain.Level;
 import com.revature.coursems.domain.Login;
-import com.revature.coursems.domain.Video;
 import com.revature.coursems.domain.updateDTO;
 import com.revature.coursems.repository.CourseRepository;
 import com.revature.coursems.service.CourseService;
-import com.revature.coursems.domain.Doc;
 
 import exception.BusinessServiceException;
 import exception.DatabaseServiceException;
@@ -65,17 +64,21 @@ public class CourseServiceImpl implements CourseService {
 	@Override
 	public void saveCourse(Course course) throws BusinessServiceException {
 		try {
-//			String name=course.getName();
+			
 			LocalDateTime time = LocalDateTime.now();
 			course.setCreatedOn(time);
-//			if(name==null)
-//			{
-//				 throw new BusinessServiceException("Fields missing");
-//			}
-//			else {
-//			
-//			 courseRepository.saveCourse(course);
-//			}	
+			List<Doc> docs=course.getDocObj();
+			docs.get(0).setCreatedOn(time);
+			
+			course.setDocObj(docs);
+			course.setCreatedOn(time);
+			if(course.getIsPreSignUp()==null)
+				course.setIsPreSignUp(false);
+			if(course.getIsSlugLogin()==null)
+				course.setIsSlugLogin(false);
+			if(course.getIsDashboard()==null)
+				course.setIsDashboard(false);
+			
 			course.setIsActive(true);
 			courseRepository.saveCourse(course);
 		} catch (DatabaseServiceException e) {
@@ -116,7 +119,20 @@ public class CourseServiceImpl implements CourseService {
 			course.setMode(updateDTOObj.getMode());
 			course.setCompletionActivityPoints(updateDTOObj.getCompletionActivityPoints());
 			course.setEnrollmentActivityPoints(updateDTOObj.getEnrollmentActivityPoints());
-			if(course.getId()==null || course.getName()==null || course.getCompletionActivityPoints()==0||course.getEnrollmentActivityPoints()==0||course.getVersion()==0)
+			if(updateDTOObj.getDocObj().get(0).getId()!=null){
+				List<Doc> docs=updateDTOObj.getDocObj();
+				docs.get(0).setCreatedOn(updateDTOObj.getDocObj().get(0).getCreatedOn());
+				docs.get(0).setModifiedOn(time);
+				course.setDocObj(docs);
+			}
+			else{
+				List<Doc> docs=updateDTOObj.getDocObj();
+				docs.get(0).setCreatedOn(time);
+				docs.get(0).setModifiedOn(time);
+				course.setDocObj(docs);
+		}
+		
+			if(course.getId()==null || course.getName()==null)
 			{
 			throw new BusinessServiceException("Required fields are missing");
 		}
@@ -213,15 +229,15 @@ public class CourseServiceImpl implements CourseService {
 
 	@Override
 	public List<CourseSubscribedVideo> viewVideoByCourseId(int id) throws BusinessServiceException{
-		List<CourseSubscribedVideo> course_video;
+		List<CourseSubscribedVideo> courseVideo;
 		try {
            if(courseRepository.findCourseById(id)!=null) {
-		       course_video=courseRepository.viewVideoByCourseId(id);
+		       courseVideo=courseRepository.viewVideoByCourseId(id);
             }
            else {
 	           throw new BusinessServiceException("Given course id not found");
               }
-           return course_video;
+           return courseVideo;
 	     }catch(DatabaseServiceException e) {
 		     throw new BusinessServiceException(e.getMessage());
 	      }

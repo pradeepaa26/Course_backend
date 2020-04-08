@@ -1,6 +1,5 @@
 package com.revature.coursems.service;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import com.revature.coursems.domain.Category;
@@ -8,7 +7,6 @@ import com.revature.coursems.domain.Course;
 import com.revature.coursems.domain.CourseSubscribedVideo;
 import com.revature.coursems.domain.Doc;
 import com.revature.coursems.domain.Level;
-import com.revature.coursems.domain.Video;
 import com.revature.coursems.domain.updateDTO;
 
 import exception.BusinessServiceException;
