@@ -22,10 +22,11 @@ import com.revature.coursems.domain.CourseSubscribedVideo;
 import com.revature.coursems.domain.Doc;
 import com.revature.coursems.domain.Level;
 import com.revature.coursems.domain.updateDTO;
+import com.revature.coursems.exception.BusinessServiceException;
+import com.revature.coursems.exception.HTTPStatusResponse;
 import com.revature.coursems.service.CourseService;
 
-import exception.BusinessServiceException;
-import exception.HTTPStatusResponse;
+
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController

@@ -1,4 +1,4 @@
-package exception;
+package com.revature.coursems.exception;
 
 public class HTTPStatusResponse {
 	private int statusCode;

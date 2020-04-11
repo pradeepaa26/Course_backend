@@ -8,8 +8,8 @@ import com.revature.coursems.domain.CourseSubscribedVideo;
 import com.revature.coursems.domain.Doc;
 import com.revature.coursems.domain.Level;
 import com.revature.coursems.domain.Login;
+import com.revature.coursems.exception.DatabaseServiceException;
 
-import exception.DatabaseServiceException;
 
 public interface CourseRepository   {
     public void saveCourse(Course course) throws DatabaseServiceException;

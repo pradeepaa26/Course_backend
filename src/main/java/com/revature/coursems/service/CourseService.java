@@ -8,8 +8,9 @@ import com.revature.coursems.domain.CourseSubscribedVideo;
 import com.revature.coursems.domain.Doc;
 import com.revature.coursems.domain.Level;
 import com.revature.coursems.domain.updateDTO;
+import com.revature.coursems.exception.BusinessServiceException;
 
-import exception.BusinessServiceException;
+
 
 public interface CourseService {
     public void saveCourse(Course course) throws BusinessServiceException;

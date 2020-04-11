@@ -13,11 +13,12 @@ import com.revature.coursems.domain.Doc;
 import com.revature.coursems.domain.Level;
 import com.revature.coursems.domain.Login;
 import com.revature.coursems.domain.updateDTO;
+import com.revature.coursems.exception.BusinessServiceException;
+import com.revature.coursems.exception.DatabaseServiceException;
 import com.revature.coursems.repository.CourseRepository;
 import com.revature.coursems.service.CourseService;
 
-import exception.BusinessServiceException;
-import exception.DatabaseServiceException;
+
 
 @Service
 public class CourseServiceImpl implements CourseService {

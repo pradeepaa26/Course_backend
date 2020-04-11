@@ -1,7 +1,6 @@
-package exception;
+package com.revature.coursems.exception;
 
-public class DatabaseServiceException extends Exception{
-	
+public class DatabaseServiceException extends Exception {
 	private static final long serialVersionUID = 1L;
 
 	public DatabaseServiceException(String message) {

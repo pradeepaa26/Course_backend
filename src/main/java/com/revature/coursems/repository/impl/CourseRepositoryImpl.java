@@ -14,9 +14,10 @@ import com.revature.coursems.domain.CourseSubscribedVideo;
 import com.revature.coursems.domain.Doc;
 import com.revature.coursems.domain.Level;
 import com.revature.coursems.domain.Login;
+import com.revature.coursems.exception.DatabaseServiceException;
 import com.revature.coursems.repository.CourseRepository;
 
-import exception.DatabaseServiceException;
+;
 
 @Repository
 public class CourseRepositoryImpl implements CourseRepository {
