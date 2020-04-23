@@ -1,0 +1,35 @@
+[source,http,options="nowrap"]
+----
+PUT /courses HTTP/1.1
+Content-Type: application/json
+Content-Length: 585
+Host: localhost:8080
+
+{
+  "id" : null,
+  "name" : null,
+  "levelId" : 0,
+  "categoryId" : 0,
+  "docObj" : null,
+  "courseSubscribedVideo" : null,
+  "tag" : null,
+  "slug" : null,
+  "isActive" : null,
+  "isLevelOverride" : null,
+  "isPreSignUp" : null,
+  "isSlugLogin" : null,
+  "isDashboard" : null,
+  "description" : null,
+  "mode" : null,
+  "metaKey" : null,
+  "metaDesc" : null,
+  "course_icon" : null,
+  "createdBy" : null,
+  "modifiedBy" : null,
+  "createdOn" : null,
+  "modifiedOn" : null,
+  "version" : 0,
+  "completionActivityPoints" : 0,
+  "enrollmentActivityPoints" : 0
+}
+----

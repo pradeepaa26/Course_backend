@@ -1,0 +1,16 @@
+[source,options="nowrap"]
+----
+{
+  "statusCode" : 200,
+  "description" : "data retrived successfully",
+  "data" : [ {
+    "id" : 1,
+    "name" : "Level 1",
+    "createdBy" : "Pradeepaa",
+    "modifiedBy" : "Yogesh",
+    "cratedOn" : [ 2020, 4, 15 ],
+    "modifiedOn" : [ 2020, 4, 15 ],
+    "active" : true
+  } ]
+}
+----

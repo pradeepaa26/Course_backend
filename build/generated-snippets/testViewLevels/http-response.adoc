@@ -1,0 +1,23 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json
+Content-Length: 294
+
+{
+  "statusCode" : 200,
+  "description" : "data retrived successfully",
+  "data" : [ {
+    "id" : 1,
+    "name" : "Level 1",
+    "createdBy" : "Pradeepaa",
+    "modifiedBy" : "Yogesh",
+    "cratedOn" : [ 2020, 4, 15 ],
+    "modifiedOn" : [ 2020, 4, 15 ],
+    "active" : true
+  } ]
+}
+----

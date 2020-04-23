@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.revature.coursems.service.impl.CourseServiceImplTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2020-04-23T15:12:09" hostname="DESKTOP-AQE0OEU" time="4.153">
+  <properties/>
+  <testcase name="testViewCategories()" classname="com.revature.coursems.service.impl.CourseServiceImplTest" time="3.564"/>
+  <testcase name="testViewCategoryById()" classname="com.revature.coursems.service.impl.CourseServiceImplTest" time="0.011"/>
+  <testcase name="testViewLevelById()" classname="com.revature.coursems.service.impl.CourseServiceImplTest" time="0.02"/>
+  <testcase name="testGetCourseById()" classname="com.revature.coursems.service.impl.CourseServiceImplTest" time="0.012"/>
+  <testcase name="testSaveCourse()" classname="com.revature.coursems.service.impl.CourseServiceImplTest" time="0.412"/>
+  <testcase name="testFindAllCourses()" classname="com.revature.coursems.service.impl.CourseServiceImplTest" time="0.012"/>
+  <testcase name="testDeleteById()" classname="com.revature.coursems.service.impl.CourseServiceImplTest" time="0.018"/>
+  <testcase name="testViewLevels()" classname="com.revature.coursems.service.impl.CourseServiceImplTest" time="0.008"/>
+  <testcase name="testUpdate()" classname="com.revature.coursems.service.impl.CourseServiceImplTest" time="0.057"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

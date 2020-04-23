@@ -1,0 +1,8 @@
+[source,options="nowrap"]
+----
+{
+  "statusCode" : 200,
+  "description" : "Status switched successfully",
+  "data" : null
+}
+----

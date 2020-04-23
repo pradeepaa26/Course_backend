@@ -1,0 +1,34 @@
+[source,options="nowrap"]
+----
+{
+  "statusCode" : 200,
+  "description" : "data retrived successfully",
+  "data" : [ {
+    "id" : 1,
+    "name" : "Java",
+    "levelObj" : null,
+    "categoryObj" : null,
+    "docObj" : null,
+    "courseSubscribedVideo" : null,
+    "tag" : "Class",
+    "slug" : "Java",
+    "isActive" : true,
+    "isLevelOverride" : true,
+    "isPreSignUp" : true,
+    "isSlugLogin" : true,
+    "isDashboard" : false,
+    "description" : "Java is a Programming Language",
+    "metaKey" : "Java",
+    "metaDesc" : "Java is a Programming Language",
+    "course_icon" : "https://localhost:8081",
+    "createdBy" : "Pradeepaa",
+    "modifiedBy" : "Yogesh",
+    "createdOn" : [ 2020, 4, 15, 18, 45, 32 ],
+    "modifiedOn" : [ 2020, 4, 15, 18, 50, 45 ],
+    "version" : 1,
+    "mode" : "T",
+    "completionActivityPoints" : 12,
+    "enrollmentActivityPoints" : 15
+  } ]
+}
+----
